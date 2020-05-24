@@ -123,9 +123,16 @@ def segment():
             result = tflite_interpreter_c.get_tensor(output_details_c[0]['index'])
             result = result > 0.5
             result = result*255
-            result = np.squeeze(result)
+            mask = np.squeeze(result)
+            bg = np.asarray(img).copy()
+            for i in range(len(mask)):
+                for j in range(len(mask[i])):
+                    if mask[i][j]>0:
+                        bg[i][j][0] = 0
+                        bg[i][j][1] = 0
+                        bg[i][j][2] = 255
 
-            img = Image.fromarray(result.astype("uint8"))
+            img = Image.fromarray(bg.astype("uint8"))
 
             rawBytes = io.BytesIO()
             img.save(rawBytes, "JPEG")
