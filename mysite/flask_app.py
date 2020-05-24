@@ -64,10 +64,14 @@ def detect():
                     for x in range( 0, 4 ):
                         draw.rectangle((ymin, xmin, ymax, xmax), outline=(255, 255, 0))
 
-    rawBytes = io.BytesIO()
-    img.save(rawBytes, "JPEG")
-    rawBytes.seek(0)
-    return rawBytes.getvalue()
+            img = img.resize((128,128))
+            rawBytes = io.BytesIO()
+            img.save(rawBytes, "JPEG")
+            rawBytes.seek(0)
+            return rawBytes.getvalue()
+        else:
+            return "Could not find image"
+    return "Please use POST method"
 
 def load_image_into_numpy_array(image):
     (im_width, im_height) = image.size
@@ -95,10 +99,14 @@ def detect_rcnn():
                 skip_scores=True,
                 skip_labels=True )
             img = Image.fromarray(image_np.astype("uint8"))
-    rawBytes = io.BytesIO()
-    img.save(rawBytes, "JPEG")
-    rawBytes.seek(0)
-    return rawBytes.getvalue()
+            img = img.resize((128,128))
+            rawBytes = io.BytesIO()
+            img.save(rawBytes, "JPEG")
+            rawBytes.seek(0)
+            return rawBytes.getvalue()
+        else:
+            return "Could not find image"
+    return "Please use POST method"
 
 @app.route("/segment", methods=["POST"])
 def segment():
@@ -119,10 +127,13 @@ def segment():
 
             img = Image.fromarray(result.astype("uint8"))
 
-    rawBytes = io.BytesIO()
-    img.save(rawBytes, "JPEG")
-    rawBytes.seek(0)
-    return rawBytes.getvalue()
+            rawBytes = io.BytesIO()
+            img.save(rawBytes, "JPEG")
+            rawBytes.seek(0)
+            return rawBytes.getvalue()
+        else:
+            return "Could not find image"
+    return "Please use POST method"
 
 def run_inference_for_single_image(image, graph):
     with graph.as_default():
