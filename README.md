@@ -26,4 +26,4 @@ Curl Command :
 
 curl -k -X POST -F 'image=@/path/to/image' -v http://sriyaR.pythonanywhere.com/segment > tested_segment.jpg
 
- ![Crack Segmented Output](demo/tested_segment.jpg)
+ ![Crack Segmented Output](demo/crack.jpg)
